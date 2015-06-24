@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
+
+DEPLOY_TREE=$1
+TARGET=$2
+VENV=$3
+
+set -e
+
+cd "${DEPLOY_TREE}"
+git fetch --all
+git checkout --force "${TARGET}"
+
+
+# Deploy
+
+source "${VENV}"
+
+pip install -r requirements.txt
+
+./manage.py compilemessages
+./manage.py collectstatic --noinput
+./manage.py migrate && touch uwsgi.ini

@@ -1,0 +1,19 @@
+*.log
+*.pot
+*.pyc
+local_settings.py
+
+Session.vim
+.ropeproject
+
+#virtualenv
+.env
+
+# Fontconfig tmp was created venv for some reason
+fontconfig
+settings_local.py
+db.sqlite3
+
+**/.sass-cache
+**/.sass-cache/*
+*.css.map
