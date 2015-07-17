@@ -30,7 +30,7 @@ server {
     server_name         example.com;
     ssl on;
     ssl_certificate     /etc/nginx/ssl/example.com.crt;
-    ssl_certificate_key /etc/nginx/ssl/example.com.se.key;
+    ssl_certificate_key /etc/nginx/ssl/example.com.key;
 
     access_log /var/log/nginx/vibrant_deployer.access.log;
     error_log /var/log/nginx/vibrant_deployer.error.log;
