@@ -13,10 +13,23 @@ Customize local_settings.py. Make sure that the remote repository etc is set up 
 cp local_settings.py.example local_settings.py
 ```
 
-Example of a deploy hook with curl (on Gitlab CI):
+Example of a deploy hook with curl (on Gitlab CI) with `SECRECT_KEY` set up as a variable:
 
 ```bash
-curl -i -X POST -H "Content-Type: application/json" -d ''{"token":"CHANGEME", "ref": "''"$CI_BUILD_REF"''"}'' https://example.com:5000/deploy/
+curl -i -X POST -H "Content-Type: application/json" -d ''{"key":"''"$SECRET_KEY"''", "ref": "''"$CI_BUILD_REF"''"}'' https://example.com:5000/deploy/
+```
+
+This will however give a return code of 0 for all HTTP status codes. To account for non-200 status codes, we can use a script that checks for it and outputs the data to stderr.
+
+```bash
+/usr/bin/env bash
+
+statuscode=$(curl --silent --output /dev/stderr --write-out "%{http_code}" -i -X POST -H "Content-Type: application/json" -d '{"key":"'"$DEPLOY_KEY"'", "ref": "'"$CI_BUILD_REF"'"}' https://example.com:5000/deploy/)
+
+if [ $statuscode -ne 200 ]
+then
+	exit 1
+fi
 ```
 
 Example nginx site-config:

@@ -1,20 +1,20 @@
 from flask import Flask, request, Response
 import subprocess
 
-from local_settings import SECRET_TOKEN, DEPLOY_TREE, DJANGO_VENV
+from local_settings import SECRET_KEY, DEPLOY_TREE, VENV
 
 application = Flask(__name__)
 
 
 @application.route('/deploy/', methods=['POST'])
 def deploy():
-    token = request.json.get('token')
+    key = request.json.get('key')
     ref = request.json.get('ref')
 
-    if SECRET_TOKEN == token:
+    if SECRET_KEY == key:
         try:
             subprocess.check_call(['./deploy',
-                                   ref, DEPLOY_TREE, DJANGO_VENV])
+                                   ref, DEPLOY_TREE, VENV])
         except Exception:
             return Response('Deployement failed', 500, )
 
