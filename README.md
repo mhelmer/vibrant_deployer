@@ -22,7 +22,7 @@ curl -i -X POST -H "Content-Type: application/json" -d ''{"key":"''"$SECRET_KEY"
 This will however give a return code of 0 for all HTTP status codes. To account for non-200 status codes, we can use a script that checks for it and outputs the data to stderr.
 
 ```bash
-/usr/bin/env bash
+#/usr/bin/env bash
 
 statuscode=$(curl --silent --output /dev/stderr --write-out "%{http_code}" -i -X POST -H "Content-Type: application/json" -d '{"key":"'"$DEPLOY_KEY"'", "ref": "'"$CI_BUILD_REF"'"}' https://example.com:5000/deploy/)
 
