@@ -14,6 +14,11 @@ git checkout --force "${TARGET}"
 
 # Deploy
 
+if [ -f "bower.json" ]
+then 
+	bower install -f bower.json
+fi
+
 source "${VENV}/bin/activate"
 
 pip install -r requirements.txt
