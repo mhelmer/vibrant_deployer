@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
 
+DEPLOY_TREE=/path/to/app
+VENV=.env # or full path
+
 TARGET=$1
-DEPLOY_TREE=$2
-VENV=$3
 
 set -e
 

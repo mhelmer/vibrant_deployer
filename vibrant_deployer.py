@@ -1,20 +1,23 @@
 from flask import Flask, request, Response
 import subprocess
+import os
 
-from local_settings import SECRET_KEY, DEPLOY_TREE, VENV
+from local_settings import TOKENS
 
 application = Flask(__name__)
 
 
 @application.route('/deploy/', methods=['POST'])
 def deploy():
-    key = request.json.get('key')
+    token = request.json.get('token')
+    site = request.json.get('site')
     ref = request.json.get('ref')
 
-    if SECRET_KEY == key:
+    if site in TOKENS and TOKENS[site] == token:
         try:
-            subprocess.check_call(['./deploy',
-                                   ref, DEPLOY_TREE, VENV])
+            # critical that site is checked to be a key in tokens!
+            deploy_script = os.path.join('deploy', site)
+            subprocess.check_call([deploy_script, ref])
         except Exception:
             return Response('Deployement failed', 500, )
 
