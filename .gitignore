@@ -1,18 +1,20 @@
 *.log
 *.pot
 *.pyc
-local_settings.py
+/local_settings.py
 
 Session.vim
 .ropeproject
 
 #virtualenv
-.env
+/.env
+/deploy/*
+!/deploy/site1.example
 
 # Fontconfig tmp was created venv for some reason
-fontconfig
-settings_local.py
-db.sqlite3
+/fontconfig
+/settings_local.py
+/db.sqlite3
 
 **/.sass-cache
 **/.sass-cache/*
