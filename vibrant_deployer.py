@@ -1,8 +1,7 @@
 from flask import Flask, request, Response
 import subprocess
-import os
 
-from local_settings import TOKENS
+from local_settings import TOKENS, DEPLOY_SCRIPTS
 
 application = Flask(__name__)
 
@@ -15,9 +14,7 @@ def deploy():
 
     if site in TOKENS and TOKENS[site] == token:
         try:
-            # critical that site is checked to be a key in tokens!
-            deploy_script = os.path.join('deploy', site)
-            subprocess.check_call([deploy_script, ref])
+            subprocess.check_call([DEPLOY_SCRIPTS[site], ref])
         except Exception:
             return Response('Deployement failed', 500, )
 
